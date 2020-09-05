@@ -21,7 +21,7 @@ sed -i '$a src-git jefferymvp https://github.com/jefferymvp/luci-app-koolproxyR'
 
 
 wget -P tools/upx/ https://raw.githubusercontent.com/coolsnowwolf/lede/master/tools/upx/Makefile
-wget -P tools/upx/ https://raw.githubusercontent.com/coolsnowwolf/lede/master/tools/ucl/Makefile
+wget -P tools/ucl/ https://raw.githubusercontent.com/coolsnowwolf/lede/master/tools/ucl/Makefile
 
-sed -i '/+= patchelf/a\tools-y += ucl upx' tools/Makefile
+sed -i '/tools-y += mtools/a\tools-y += ucl upx' tools/Makefile
 sed -i '/builddir dependencies/a\$(curdir)/upx/compile := $(curdir)/ucl/compile' tools/Makefile
