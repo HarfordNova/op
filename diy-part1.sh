@@ -18,3 +18,10 @@ sed -i '$a src-git kenzok8 https://github.com/kenzok8/openwrt-packages' feeds.co
 sed -i '$a src-git small https://github.com/kenzok8/small' feeds.conf.default
 sed -i '$a src-git vernesong https://github.com/vernesong/OpenClash' feeds.conf.default
 sed -i '$a src-git jefferymvp https://github.com/jefferymvp/luci-app-koolproxyR' feeds.conf.default
+
+
+wget -P tools/upx/ https://raw.githubusercontent.com/coolsnowwolf/lede/master/tools/upx/Makefile
+wget -P tools/upx/ https://raw.githubusercontent.com/coolsnowwolf/lede/master/tools/ucl/Makefile
+
+sed -i '/+= patchelf/a\tools-y += ucl upx' tools/Makefile
+sed -i '/builddir dependencies/a\$(curdir)/upx/compile := $(curdir)/ucl/compile' tools/Makefile
