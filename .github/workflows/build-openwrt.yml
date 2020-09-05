@@ -161,7 +161,7 @@ jobs:
         echo "::warning file=cowtransfer.com::$(cat cowtransfer.log | grep https)"
 
     - name: Upload bin to cowtransfer
-      if: steps.organize.outputs.status == 'success' && env.UPLOAD_BIN_COWTRANSFER == 'true' && !cancelled()
+      if: steps.organizeBin.outputs.status == 'success' && env.UPLOAD_BIN_COWTRANSFER == 'true' && !cancelled()
       run: |
         curl -fsSL git.io/file-transfer | sh
         ./transfer cow --block 2621440 -s -p 64 --no-progress ${BIN} 2>&1 | tee cowtransfer.log
