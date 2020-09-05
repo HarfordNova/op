@@ -37,8 +37,9 @@ env:
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
   UPLOAD_BIN_COWTRANSFER: true
-  UPLOAD_COWTRANSFER: false
+  UPLOAD_COWTRANSFER: true
   UPLOAD_WETRANSFER: false
+  UPLOAD_BIN_WETRANSFER: true
   TZ: Asia/Shanghai
 
 jobs:
@@ -143,7 +144,7 @@ jobs:
       if: env.UPLOAD_BIN_COWTRANSFER == 'true' && !cancelled()
       run: |
         cd openwrt/bin
-        echo "::set-env name=BIN::$PWD"
+        echo "::set-env name=UPBIN::$PWD"
         echo "::set-output name=status::success"
 
     - name: Upload firmware directory
@@ -164,7 +165,7 @@ jobs:
       if: steps.organizeBin.outputs.status == 'success' && env.UPLOAD_BIN_COWTRANSFER == 'true' && !cancelled()
       run: |
         curl -fsSL git.io/file-transfer | sh
-        ./transfer cow --block 2621440 -s -p 64 --no-progress ${BIN} 2>&1 | tee cowtransfer.log
+        ./transfer cow --block 2621440 -s -p 64 --no-progress ${UPBIN} 2>&1 | tee cowtransfer.log
         echo "::warning file=cowtransfer.com::$(cat cowtransfer.log | grep https)"
 
     - name: Upload firmware to WeTransfer
@@ -172,4 +173,11 @@ jobs:
       run: |
         curl -fsSL git.io/file-transfer | sh
         ./transfer wet -s -p 16 --no-progress ${FIRMWARE} 2>&1 | tee wetransfer.log
+        echo "::warning file=wetransfer.com::$(cat wetransfer.log | grep https)"
+    
+    - name: Upload bin to WeTransfer
+      if: steps.organizeBin.outputs.status == 'success' && env.UPLOAD_BIN_WETRANSFER == 'true' && !cancelled()
+      run: |
+        curl -fsSL git.io/file-transfer | sh
+        ./transfer wet -s -p 16 --no-progress ${UPBIN} 2>&1 | tee wetransfer.log
         echo "::warning file=wetransfer.com::$(cat wetransfer.log | grep https)"
