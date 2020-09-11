@@ -19,7 +19,10 @@
 #sed -i '$a src-git vernesong https://github.com/vernesong/OpenClash' feeds.conf.default
 #sed -i '$a src-git jefferymvp https://github.com/jefferymvp/luci-app-koolproxyR' feeds.conf.default
 
-sed -i '$a src-git liuran001_packages https://github.com/liuran001/openwrt-packages' feeds.conf.default
+#sed -i '$a src-git liuran001_packages https://github.com/liuran001/openwrt-packages' feeds.conf.default
+
+sed -i '$a src-git https://github.com/jerrykuku/lua-maxminddb' feeds.conf.default
+sed -i '$a src-git https://github.com/jerrykuku/luci-app-vssr' feeds.conf.default
 
 #wget -P tools/upx/ https://raw.githubusercontent.com/coolsnowwolf/lede/master/tools/upx/Makefile
 #wget -P tools/ucl/ https://raw.githubusercontent.com/coolsnowwolf/lede/master/tools/ucl/Makefile
