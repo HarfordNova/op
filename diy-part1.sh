@@ -21,8 +21,10 @@
 
 #sed -i '$a src-git liuran001_packages https://github.com/liuran001/openwrt-packages' feeds.conf.default
 
-sed -i '$a src-git maxminddb https://github.com/jerrykuku/lua-maxminddb' feeds.conf.default  #git lua-maxminddb 依赖
-sed -i '$a src-git jerrykuku https://github.com/jerrykuku/luci-app-vssr' feeds.conf.default  
+cd package/lean/  
+git clone https://github.com/jerrykuku/lua-maxminddb.git  #git lua-maxminddb 依赖
+git clone https://github.com/jerrykuku/luci-app-vssr.git
+cd ../..  
 
 # 修改openwrt登陆地址,把下面的192.168.2.2修改成你想要的就可以了
 sed -i 's/192.168.1.1/192.168.1.4/g' ./package/base-files/files/bin/config_generate
